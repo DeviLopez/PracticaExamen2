@@ -12,8 +12,10 @@ class MapaScreen extends StatefulWidget {
 }
 
 class _MapaScreenState extends State<MapaScreen> {
-  Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+  late GoogleMapController inicio;
 
+  Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+  bool mapa = false;
   @override
   Widget build(BuildContext context) {
     final ScanModel scan =
@@ -33,26 +35,50 @@ class _MapaScreenState extends State<MapaScreen> {
       ),
     );
 
+    MapType cambioMapa() {
+      if (mapa)
+        return MapType.terrain;
+      else
+        return MapType.normal;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Mapa'),
         actions: [
           IconButton(
             icon: Icon(Icons.center_focus_strong_outlined),
-            onPressed: () {},
+            onPressed: () {
+              inicio.animateCamera(CameraUpdate.newCameraPosition(
+                  CameraPosition(target: _puntInicial.target, zoom: 15)));
+            },
           )
         ],
       ),
       body: GoogleMap(
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
-        mapType: MapType.normal,
+        mapType: cambioMapa(),
         markers: markers,
         initialCameraPosition: _puntInicial,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
+          inicio = controller;
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.terrain),
+        foregroundColor: Colors.amber,
+        onPressed: () {
+          if (mapa)
+            mapa = false;
+          else
+            mapa = true;
+
+          setState(() {});
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

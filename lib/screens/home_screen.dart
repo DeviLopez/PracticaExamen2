@@ -46,6 +46,9 @@ class _HomeScreenBody extends StatelessWidget {
     final scanListProvider =
         Provider.of<ScanListProvider>(context, listen: false);
 
+    //scanListProvider.nouScan("geo:40.7260888,2.9113035");
+    //scanListProvider.nouScan("https://github.com/");
+
     switch (currentIndex) {
       case 0:
         scanListProvider.carregaScansPerTipus('geo');
