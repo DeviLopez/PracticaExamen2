@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
         'mapa': (_) => MapaScreen(),
       },
       theme: ThemeData(
-        // No es pot emprar colorPrimary des de l'actualització de Flutter
         colorScheme: ColorScheme.light().copyWith(
           primary: Colors.deepPurple,
         ),

@@ -12,7 +12,7 @@ class DBProvider {
   DBProvider._();
 
   Future<Database> get database async {
-    if (database == null) _database = await initDB();
+    if (_database == null) _database = await initDB();
 
     return _database!;
   }
@@ -78,7 +78,7 @@ class DBProvider {
 
   Future<List<ScanModel>> getScanByTipus(String tipus) async {
     final db = await database;
-    final res = await db.query('Scan', where: 'tipus = ?', whereArgs: [tipus]);
+    final res = await db.query('Scans', where: 'tipus = ?', whereArgs: [tipus]);
 
     return res.isNotEmpty ? res.map((e) => ScanModel.fromMap(e)).toList() : [];
   }
@@ -102,7 +102,7 @@ class DBProvider {
 
   Future<int> deleteScan(int id) async {
     final db = await database;
-    final res = await db.delete('Scan', where: 'id ? ?', whereArgs: [id]);
+    final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
     return res;
   }
 }
